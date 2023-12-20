@@ -6,6 +6,7 @@ import Stats from "./Stats";
 import Temperature from "./Temperature";
 import { firebaseDB } from "./config/firebase";
 import "./global.css";
+import AlarmSetting from "./AlarmSetting";
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -74,6 +75,8 @@ export default function App() {
           <Temperature data={data} />
 
           <Stats data={data} />
+          
+          <AlarmSetting data={data}/>
 
           <NextDays data={data.daily} />
         </>
