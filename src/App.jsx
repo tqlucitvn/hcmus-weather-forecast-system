@@ -53,7 +53,7 @@ export default function App() {
         });
         setLoading(false);
       })();
-    }, 3000);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
