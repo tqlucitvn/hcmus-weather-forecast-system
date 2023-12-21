@@ -8,7 +8,6 @@ function AlarmSetting({ data }) {
   const [exceededHumidity, setExceededHumidity] = useState(false);
   const [exceededTemperature, setExceededTemperature] = useState(false);
 
-
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
@@ -18,14 +17,14 @@ function AlarmSetting({ data }) {
       sendAlert();
     } else {
       setExceededHumidity(false);
-    }   
+    }
     if (data.humidity > parseFloat(text1)) {
-       setExceededTemperature(true);
+      setExceededTemperature(true);
       sendAlert();
     } else {
-        setExceededTemperature(false);
-    }   
-  }, [data.current_weather.temperature, text1,data.humidity, text2]);
+      setExceededTemperature(false);
+    }
+  }, [data.current_weather.temperature, text1, data.humidity, text2]);
 
   const sendAlert = () => {
     const alertText = `ALERT - Humidity exceeded ${text2}%: ${data.humidity}% %0AALERT - Temperature exceeded ${text1}: ${data.current_weather.temperature}`;
@@ -43,9 +42,7 @@ function AlarmSetting({ data }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const my_text = `-Limit of temparature: ${text1}  %0A-Limit of humidity: ${text2}% %0A-Humidity: ${
-      data.humidity
-    }%  %0A-Temperature: ${data.current_weather.temperature}`;
+    const my_text = `-Limit of temparature: ${text1}  %0A-Limit of humidity: ${text2}% %0A-Humidity: ${data.humidity}%  %0A-Temperature: ${data.current_weather.temperature}`;
     const token = "6851377588:AAGzCAP_u9sMlwrMhY7txkfO9NRc7BKfNMs";
     const chat_id = -4072959040;
     const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${my_text}`;
@@ -54,6 +51,7 @@ function AlarmSetting({ data }) {
     api.open("GET", url, true);
     api.send();
 
+    setShowPopup(false);
     console.log("Message successfully sent!");
   };
 
@@ -69,7 +67,7 @@ function AlarmSetting({ data }) {
             <div className="popup_inner">
               <div className="form">
                 <label htmlFor="limitTemperature">
-                  Đặt giới hạn cho temp:
+                  Set temparature limit value
                   <br />
                 </label>
                 <input
@@ -82,7 +80,7 @@ function AlarmSetting({ data }) {
               </div>
               <div className="form">
                 <label htmlFor="limitHumidity">
-                Đặt giới hạn cho humidity:
+                  Set humidity limtie value
                   <br />
                 </label>
                 <input
@@ -93,7 +91,7 @@ function AlarmSetting({ data }) {
                   onChange={(e) => setText2(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn" onClick={handleSubmit}>
+              <button type="button" className="btn" onClick={handleSubmit}>
                 Submit
               </button>
               <button className="btn-close" onClick={togglePopup}>
