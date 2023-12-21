@@ -16,8 +16,8 @@ function stats({ data }) {
           {Math.round(data.wind_spedd)}mph
         </div>
         <div className="current-stats__label">Wind</div>
-        <div className="current-stats__value">{data.windspeed}mm</div>
-        <div className="current-stats__label">Rain</div>
+        <div className="current-stats__value">{data.humidity}%</div>
+        <div className="current-stats__label">Humidity</div>
       </div>
       <div>
         <div className="current-stats__value">
@@ -30,17 +30,13 @@ function stats({ data }) {
         <div className="current-stats__label">Sunset</div>
       </div>
       <div>
-        <div className="current-stats__value">{data.humidity}%</div>
-        <div className="current-stats__label">Humidity</div>
-        <div className="current-stats__value">{data.cacbon_monoxide}</div>
-        <div className="current-stats__label">CO</div>
-      </div>
-      <div>
-        <div className="current-stats__value">{data.lightvalue}</div>
+      <div className="current-stats__value">{data.lightvalue}</div>
         <div className="current-stats__label">Light</div>
-        <div className="current-stats__value">{data.pressure}</div>
+        <div className="current-stats__value">{data.air_pressure}</div>
         <div className="current-stats__label">Pressure</div>
+
       </div>
+
     </div>
   );
 }

@@ -16,6 +16,9 @@ int sensorPin = 34;
 const int DHT_PIN = 32;
 DHTesp dhtSensor;
 
+String latitudeArr[] = {"10.762987436925338", "10.795131100527945", "21.03705750058388", "16.061367185643345", "16.453334512870114", "19.812827417741886", "15.121193277041515"};
+String longitudeArr[] = {"106.6824800918965", "106.72184940246694", "105.83460232357466", "108.22745791586112", "107.54496052125019", "105.77074648694543", "108.7816666830083"};
+
 union
 {
     char bytes[4];
@@ -135,14 +138,14 @@ void loop()
     Serial.print(lightvalue);
     Serial.print("%");
     // Gửi dữ liệu lên Firebase
-    sendDataToFirebase(co, data.temperature, data.humidity, latitude, longitude, velocidadeGPS.valor, lightvalue);
+    sendDataToFirebase(co, data.temperature, data.humidity, latitude, longitude, velocidadeGPS.valor, lightvalue, latitudeArr, longitudeArr);
     delay(5000);
 }
 
 void convertCoordinatesToCartesian(float latitude, float longitude)
 {
-    float latRadius = latitude * (PI) / 180;
-    float lonRadius = longitude * (PI) / 180;
+    float latRadius = latitude * (PI / 180);
+    float lonRadius = longitude * (PI / 180);
 
     int earthRadius = 6371;
 
@@ -155,13 +158,16 @@ void convertCoordinatesToCartesian(float latitude, float longitude)
     Serial.println(posY);
 }
 
-void sendDataToFirebase(float co, float temperature, float humidity, float latitude, float longitude, float speed, float lightvalue)
+void sendDataToFirebase(float co, float temperature, float humidity, float latitude, float longitude, float speed, float lightvalue, String latitudeArr[], String longitudeArr[])
 {
+    int randomIndex = int(random(7));
+    String latVal = latitudeArr[randomIndex];
+    String longVal = longitudeArr[randomIndex];
     Firebase.setFloat(fbdo, "/weather/cacbon_monoxide", co);
     Firebase.setFloat(fbdo, "/weather/temperature", temperature);
     Firebase.setFloat(fbdo, "/weather/humidity", humidity);
-    Firebase.setFloat(fbdo, "/weather/latitude", latitude);
-    Firebase.setFloat(fbdo, "/weather/longitude", longitude);
+    Firebase.setString(fbdo, "/weather/latitude", latVal);
+    Firebase.setString(fbdo, "/weather/longitude", longVal);
     Firebase.setFloat(fbdo, "/weather/wind_spedd", speed);
     Firebase.setFloat(fbdo, "/weather/lightvalue", lightvalue);
 }
