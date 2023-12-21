@@ -14,7 +14,7 @@ export default function LocationAndDate({ data }) {
         setLocationData(response);
       });
     })();
-  }, []);
+  }, [data]);
 
   return (
     <div className="location-and-date">
